@@ -3,6 +3,7 @@ import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { config } from './config';
+import { landingPage } from './controllers/landing';
 import { errorHandler, notFoundHandler } from './middleware/error-handler';
 import { createApiRouter } from './routes';
 
@@ -32,7 +33,10 @@ export function createApp(): Express {
   app.use(express.json({ limit: '10kb' }));
   app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 
-  // API routes + unified error handling.
+  // Browser landing page + API routes + unified error handling.
+  app.get('/', (_req, res) => {
+    res.type('html').send(landingPage);
+  });
   app.use('/api', createApiRouter());
   app.use(notFoundHandler);
   app.use(errorHandler);
