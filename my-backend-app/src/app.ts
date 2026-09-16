@@ -1,14 +1,41 @@
-import express from 'express';
-import { setRoutes } from './routes/index';
+import cors from 'cors';
+import express, { Express } from 'express';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import { config } from './config';
+import { errorHandler, notFoundHandler } from './middleware/error-handler';
+import { createApiRouter } from './routes';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+/**
+ * Application factory: builds the Express app without binding a port,
+ * which keeps it trivially testable and reusable.
+ */
+export function createApp(): Express {
+  const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+  app.disable('x-powered-by');
+  app.set('trust proxy', 1);
 
-setRoutes(app);
+  // Security hardening.
+  app.use(helmet());
+  app.use(cors({ origin: config.corsOrigin }));
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000,
+      limit: config.rateLimitMax,
+      standardHeaders: true,
+      legacyHeaders: false,
+    }),
+  );
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+  // Body parsing with a small payload cap (DoS mitigation).
+  app.use(express.json({ limit: '10kb' }));
+  app.use(express.urlencoded({ extended: false, limit: '10kb' }));
+
+  // API routes + unified error handling.
+  app.use('/api', createApiRouter());
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+
+  return app;
+}

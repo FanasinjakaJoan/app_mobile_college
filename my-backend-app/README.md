@@ -1,52 +1,53 @@
-# My Backend App
+# App Mobile College — API
 
-This is a simple backend application built with Express and TypeScript.
+REST API backing the Flutter app. Built with **Express 5** and **TypeScript
+(strict mode)**. The complete documentation (API reference, environment
+variables, Docker deployment) lives in the [root README](../README.md).
 
-## Features
+## Quick start
 
-- RESTful API
-- Modular structure with controllers, routes, and models
-- TypeScript for type safety
-
-## Project Structure
-
-```
-my-backend-app
-├── src
-│   ├── app.ts                # Entry point of the application
-│   ├── controllers           # Contains controllers for handling requests
-│   │   └── index.ts          # Index controller
-│   ├── routes                # Contains route definitions
-│   │   └── index.ts          # Route setup
-│   └── models                # Contains data models
-│       └── index.ts          # Data model definitions
-├── package.json              # NPM package configuration
-├── tsconfig.json             # TypeScript configuration
-└── README.md                 # Project documentation
+```sh
+cp .env.example .env   # adjust values if needed
+npm install
+npm run dev            # http://localhost:3000 with hot reload
 ```
 
-## Installation
+## Scripts
 
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   ```
-2. Navigate to the project directory:
-   ```
-   cd my-backend-app
-   ```
-3. Install dependencies:
-   ```
-   npm install
-   ```
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Start with hot reload (`ts-node-dev`) |
+| `npm run build` | Type-check & compile to `dist/` |
+| `npm run typecheck` | Type-check without emitting |
+| `npm start` | Run the compiled server (`node dist/server.js`) |
 
-## Usage
+## Endpoints
 
-To start the application, run:
+- `GET /api` — API banner (name, version, endpoint index)
+- `GET /api/health` — liveness probe
+- `GET /api/courses` — list courses
+- `GET /api/courses/:id` — fetch one course
+- `POST /api/courses` — create a course (validated)
+
+## Structure
+
 ```
-npm start
+src/
+├── server.ts          # bootstrap + graceful shutdown (SIGINT/SIGTERM)
+├── app.ts             # express app factory: helmet, CORS, rate limit, JSON
+├── config/            # validated environment configuration (dotenv)
+├── routes/            # /api router composition
+├── controllers/       # request handlers + payload validation
+├── middleware/        # 404 + central error handler (uniform JSON errors)
+├── models/            # Course entity + in-memory CourseStore
+└── utils/             # structured JSON logger
 ```
 
-## License
+## Security notes
 
-This project is licensed under the MIT License.
+- All configuration comes from the environment (`.env`); nothing is
+  hardcoded. `.env` is git-ignored — `.env.example` documents every variable.
+- Requests are protected by `helmet`, a CORS allow-list, rate limiting and a
+  10 KB body size cap.
+- Controller-level validation rejects malformed ids and payloads with `400`
+  responses describing each invalid field.
