@@ -1,11 +1,11 @@
 {
-    "name": "app_mobile_college",
-    "short_name": "app_mobile_college",
+    "name": "App Mobile Collège",
+    "short_name": "Collège",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#ffffff",
+    "theme_color": "#274690",
+    "description": "Le catalogue des cours du semestre, synchronisé avec l'API du collège.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
