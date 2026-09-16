@@ -1,7 +1,2 @@
-class IndexController {
-    getIndex(req, res) {
-        res.send('Welcome to the backend application!');
-    }
-}
-
-export default IndexController;
+export { IndexController } from './index.controller';
+export { CourseController, validateCoursePayload } from './course.controller';

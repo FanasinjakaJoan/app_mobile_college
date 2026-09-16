@@ -1,0 +1,152 @@
+/* Material 3 look derived from the Flutter app's seed color #274690. */
+:root {
+  color-scheme: light dark;
+  --primary: #4158a6;
+  --on-primary: #ffffff;
+  --primary-container: #dbe1ff;
+  --on-primary-container: #00123d;
+  --surface: #faf9ff;
+  --on-surface: #1a1b21;
+  --on-surface-variant: #45464f;
+  --outline-variant: #c5c6d0;
+  --error: #ba1a1a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #b5c4ff;
+    --on-primary: #0b2878;
+    --primary-container: #284090;
+    --on-primary-container: #dbe1ff;
+    --surface: #121318;
+    --on-surface: #e3e2e9;
+    --on-surface-variant: #c5c6d0;
+    --outline-variant: #45464f;
+    --error: #ffb4ab;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--surface);
+  color: var(--on-surface);
+  line-height: 1.5;
+}
+
+.app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--surface);
+  box-shadow: 0 1px 0 var(--outline-variant);
+}
+.app-bar h1 { font-size: 1.25rem; font-weight: 500; margin: 0; }
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+}
+.icon-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--on-surface) 8%, transparent); }
+.icon-btn:disabled { opacity: 0.4; cursor: default; }
+
+.summary {
+  padding: 16px 16px 0;
+  font-size: 0.78rem;
+  color: var(--on-surface-variant);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  padding: 16px;
+}
+
+.card {
+  border: 1px solid var(--outline-variant);
+  border-radius: 16px;
+  padding: 16px;
+  min-height: 160px;
+  background: color-mix(in srgb, var(--surface) 94%, var(--primary));
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.chip {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+.credits {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--on-surface-variant);
+}
+.card h3 { margin: 0; font-size: 1rem; font-weight: 500; }
+.professor { margin: 0; font-size: 0.8rem; color: var(--on-surface-variant); }
+.schedule {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--on-surface-variant);
+}
+
+.state-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  min-height: calc(100vh - 140px);
+}
+.state-view h2 { font-size: 1.3rem; font-weight: 500; margin: 16px 0 8px; }
+.muted { color: var(--on-surface-variant); max-width: 36ch; }
+.state-icon { width: 64px; height: 64px; color: var(--on-surface-variant); }
+.state-icon.error { color: var(--error); }
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 16px;
+  border: 3.5px solid color-mix(in srgb, var(--primary) 25%, transparent);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.tonal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  cursor: pointer;
+}
+.tonal-btn:hover { filter: brightness(1.05); }

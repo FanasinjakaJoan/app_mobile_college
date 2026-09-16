@@ -1,22 +1,31 @@
 {
-  "name": "my-backend-app",
-  "version": "1.0.0",
-  "description": "A backend application using Express and TypeScript",
-  "main": "src/app.ts",
+  "name": "app-mobile-college-api",
+  "version": "1.1.0",
+  "description": "REST API backend for the App Mobile College Flutter application",
+  "main": "dist/server.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "start": "ts-node src/app.ts",
     "build": "tsc",
-    "dev": "ts-node-dev src/app.ts"
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --clear src/server.ts"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0"
   },
   "devDependencies": {
-    "typescript": "^4.5.4",
-    "ts-node": "^10.4.0",
-    "ts-node-dev": "^1.1.8",
-    "@types/express": "^4.17.13"
-  },
-  "author": "",
-  "license": "ISC"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.3",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
 }
