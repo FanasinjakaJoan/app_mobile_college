@@ -18,6 +18,8 @@ export const landingPage = `<!DOCTYPE html>
 <body>
   <h1>App Mobile Collège — API <span class="badge">en ligne</span></h1>
   <p>Serveur Express 5 / TypeScript au service de l'application Flutter.</p>
+  <p>👉 <a href="/app"><strong>Ouvrir la démo de l'application</strong></a>
+  (interface web fidèle à l'app Flutter, branchée sur cette API).</p>
   <ul>
     <li><a href="/api"><code>GET /api</code></a> — index de l'API</li>
     <li><a href="/api/health"><code>GET /api/health</code></a> — sonde de vie</li>

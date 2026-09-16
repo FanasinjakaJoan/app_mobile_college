@@ -2,6 +2,7 @@ import cors from 'cors';
 import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import path from 'node:path';
 import { config } from './config';
 import { landingPage } from './controllers/landing';
 import { errorHandler, notFoundHandler } from './middleware/error-handler';
@@ -33,10 +34,11 @@ export function createApp(): Express {
   app.use(express.json({ limit: '10kb' }));
   app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 
-  // Browser landing page + API routes + unified error handling.
+  // Browser landing page + demo web client + API routes + error handling.
   app.get('/', (_req, res) => {
     res.type('html').send(landingPage);
   });
+  app.use('/app', express.static(path.join(__dirname, '..', 'public')));
   app.use('/api', createApiRouter());
   app.use(notFoundHandler);
   app.use(errorHandler);
